@@ -1,3 +1,97 @@
+// 添加屏幕切换功能
+function showScreen(screenId) {
+  console.log('尝试切换到屏幕:', screenId); // 调试用
+  
+  // 隐藏所有屏幕
+  const screens = document.querySelectorAll('.screen');
+  screens.forEach(screen => {
+    screen.classList.remove('active');
+  });
+  
+  // 显示目标屏幕
+  const targetScreen = document.getElementById(screenId);
+  if (targetScreen) {
+    targetScreen.classList.add('active');
+    
+    // 根据目标屏幕执行相应初始化
+    switch(screenId) {
+      case 'chat-list-screen':
+        initializeChatList();
+        break;
+      case 'world-book-screen':
+        initializeWorldBook();
+        break;
+      case 'wallpaper-screen':
+        initializeWallpaperSettings();
+        break;
+      case 'api-settings-screen':
+        initializeAPISettings();
+        break;
+    }
+  } else {
+    console.error('找不到屏幕:', screenId);
+  }
+}
+
+// 初始化聊天列表的函数（需要实现）
+function initializeChatList() {
+  console.log('初始化聊天列表');
+  // 这里需要实现聊天列表的加载逻辑
+}
+
+// 初始化世界书的函数（需要实现）
+function initializeWorldBook() {
+  console.log('初始化世界书');
+  // 这里需要实现世界书的加载逻辑
+}
+
+// 初始化壁纸设置
+function initializeWallpaperSettings() {
+  console.log('初始化外观设置');
+  // 这里需要实现外观设置的加载逻辑
+}
+
+// 初始化API设置
+function initializeAPISettings() {
+  console.log('初始化API设置');
+  // 这里需要实现API设置的加载逻辑
+}
+
+// 添加返回函数
+function goBack() {
+  const currentScreen = document.querySelector('.screen.active');
+  if (currentScreen) {
+    // 根据当前屏幕决定返回哪个屏幕
+    switch(currentScreen.id) {
+      case 'chat-list-screen':
+      case 'world-book-screen':
+      case 'wallpaper-screen':
+      case 'api-settings-screen':
+        showScreen('home-screen');
+        break;
+      case 'chat-interface-screen':
+        showScreen('chat-list-screen');
+        break;
+      default:
+        showScreen('home-screen');
+    }
+  }
+}
+
+// 在 DOMContentLoaded 事件中添加初始化
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM 加载完成');
+  
+  // 为所有返回按钮添加事件
+  document.querySelectorAll('.back-btn').forEach(btn => {
+    btn.addEventListener('click', goBack);
+  });
+  
+  // 初始化主页（确保主页是活跃的）
+  showScreen('home-screen');
+  
+  // 其他初始化代码...
+});
 /**
  * 扩展功能说明：
  * 1. 新增动态主题切换、消息已读回执、聊天记录导出功能
